@@ -11,7 +11,7 @@ const Carousel = () => {
       id: 1,
       title: "Discover Exciting Auctions!",
       buttonText: "Explore More",
-      image: images.slider1 // Replace with actual image
+      image: images.slider1 
     },
     {
       id: 2,

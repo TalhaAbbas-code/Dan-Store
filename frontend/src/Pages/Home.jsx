@@ -1,7 +1,7 @@
 import React from 'react'
-import Products from './components/Products'
-import CarouselMain from './components/CarouselMain'
-import FAQ from './components/FAQ'
+import Products from '../components/Products'
+import CarouselMain from '../components/CarouselMain'
+import FAQ from '../components/FAQ'
 const Home = () => {
   return (
     <>

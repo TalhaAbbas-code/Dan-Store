@@ -7,10 +7,11 @@ import slider3 from "./slider3.png";
 import slider4 from "./slider4.png";
 import playstore from "./playstore.png";
 import apple from "./apple.png";
+import IK from "./IK.jpg";
 
 
 
 
 
 
-export {supplier,trader,registrationSuccess,slider1,slider2,slider3,slider4,playstore,apple};
+export {supplier,trader,registrationSuccess,slider1,slider2,slider3,slider4,playstore,apple,IK};

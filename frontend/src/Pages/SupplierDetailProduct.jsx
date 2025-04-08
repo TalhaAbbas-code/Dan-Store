@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { products as productData } from "../constants/products";
 import { useState } from "react";
-import AuctionCard from "./AuctionCard";
+import AuctionCard from "../components/AuctionCard";
 
 const ProductDetailPage = () => {
   const { id } = useParams();
@@ -9,7 +9,8 @@ const ProductDetailPage = () => {
   const [products] = useState(productData);
   const [activeTab, setActiveTab] = useState("details");
   const product = products.find((p) => String(p.id) === String(id));
-  const inputBoxStyle="flex justify-between bg-neutral-100 border p-5 rounded-md";
+  const inputBoxStyle =
+    "flex justify-between bg-neutral-100 border p-5 rounded-md";
   const inputTextStyle = "text-black font-bold";
   const {
     title,
@@ -17,7 +18,7 @@ const ProductDetailPage = () => {
     quantity,
     remainingQuantity,
     startTime,
-    
+
     bids = [],
   } = product;
   const highestBid =

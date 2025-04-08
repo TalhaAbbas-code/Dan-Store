@@ -29,6 +29,11 @@ export const products = [
     lotNumber: "DAN-125",
     quantity: 800,
     remainingQuantity: 300,
+    bids: [
+      { price: 16, quantity: "100kg", startTime: "11-01-2023 11:00AM" },
+      { price: 11, quantity: "20kg", startTime: "11-01-2023 10:50AM" },
+      { price: 15, quantity: "600kg", startTime: "11-01-2023 10:40AM" },
+    ],
   },
   {
     id: 3,
@@ -41,6 +46,11 @@ export const products = [
     lotNumber: "DAN-126",
     quantity: 1200,
     remainingQuantity: 600,
+    bids: [
+      { price: 16, quantity: "100kg", startTime: "11-01-2023 11:00AM" },
+      { price: 11, quantity: "20kg", startTime: "11-01-2023 10:50AM" },
+      { price: 15, quantity: "600kg", startTime: "11-01-2023 10:40AM" },
+    ],
   },
   {
     id: 4,
@@ -53,6 +63,11 @@ export const products = [
     lotNumber: "DAN-127",
     quantity: 500,
     remainingQuantity: 200,
+    bids: [
+      { price: 16, quantity: "100kg", startTime: "11-01-2023 11:00AM" },
+      { price: 11, quantity: "20kg", startTime: "11-01-2023 10:50AM" },
+      { price: 15, quantity: "600kg", startTime: "11-01-2023 10:40AM" },
+    ],
   },
   {
     id: 5,
@@ -65,6 +80,11 @@ export const products = [
     lotNumber: "DAN-128",
     quantity: 900,
     remainingQuantity: 400,
+    bids: [
+      { price: 16, quantity: "100kg", startTime: "11-01-2023 11:00AM" },
+      { price: 11, quantity: "20kg", startTime: "11-01-2023 10:50AM" },
+      { price: 15, quantity: "600kg", startTime: "11-01-2023 10:40AM" },
+    ]
   },
   {
     id: 6,
@@ -77,7 +97,12 @@ export const products = [
     lotNumber: "DAN-129",
     quantity: 1100,
     remainingQuantity: 700,
-  },
+
+bids: [
+      { price: 16, quantity: "100kg", startTime: "11-01-2023 11:00AM" },
+      { price: 11, quantity: "20kg", startTime: "11-01-2023 10:50AM" },
+      { price: 15, quantity: "600kg", startTime: "11-01-2023 10:40AM" },
+    ],  },
   {
     id: 7,
     image: Rectangle,
@@ -89,7 +114,12 @@ export const products = [
     lotNumber: "DAN-130",
     quantity: 300,
     remainingQuantity: 150,
-  },
+
+bids: [
+      { price: 16, quantity: "100kg", startTime: "11-01-2023 11:00AM" },
+      { price: 11, quantity: "20kg", startTime: "11-01-2023 10:50AM" },
+      { price: 15, quantity: "600kg", startTime: "11-01-2023 10:40AM" },
+    ],  },
   {
     id: 8,
     image: Rectangle,
@@ -101,7 +131,12 @@ export const products = [
     lotNumber: "DAN-131",
     quantity: 600,
     remainingQuantity: 250,
-  },
+
+bids: [
+      { price: 16, quantity: "100kg", startTime: "11-01-2023 11:00AM" },
+      { price: 11, quantity: "20kg", startTime: "11-01-2023 10:50AM" },
+      { price: 15, quantity: "600kg", startTime: "11-01-2023 10:40AM" },
+    ],  },
   {
     id: 9,
     image: Rectangle,
@@ -113,7 +148,12 @@ export const products = [
     lotNumber: "DAN-132",
     quantity: 750,
     remainingQuantity: 350,
-  },
+
+bids: [
+      { price: 16, quantity: "100kg", startTime: "11-01-2023 11:00AM" },
+      { price: 11, quantity: "20kg", startTime: "11-01-2023 10:50AM" },
+      { price: 15, quantity: "600kg", startTime: "11-01-2023 10:40AM" },
+    ],  },
   {
     id: 10,
     image: Rectangle,
@@ -125,7 +165,12 @@ export const products = [
     lotNumber: "DAN-133",
     quantity: 850,
     remainingQuantity: 450,
-  },
+
+bids: [
+      { price: 16, quantity: "100kg", startTime: "11-01-2023 11:00AM" },
+      { price: 11, quantity: "20kg", startTime: "11-01-2023 10:50AM" },
+      { price: 15, quantity: "600kg", startTime: "11-01-2023 10:40AM" },
+    ],  },
   {
     id: 11,
     image: Rectangle,
@@ -137,7 +182,12 @@ export const products = [
     lotNumber: "DAN-134",
     quantity: 700,
     remainingQuantity: 350,
-  },
+
+bids: [
+      { price: 16, quantity: "100kg", startTime: "11-01-2023 11:00AM" },
+      { price: 11, quantity: "20kg", startTime: "11-01-2023 10:50AM" },
+      { price: 15, quantity: "600kg", startTime: "11-01-2023 10:40AM" },
+    ],  },
   {
     id: 12,
     image: Rectangle,
@@ -149,6 +199,11 @@ export const products = [
     lotNumber: "DAN-135",
     quantity: 900,
     remainingQuantity: 450,
+    bids: [
+      { price: 16, quantity: "100kg", startTime: "11-01-2023 11:00AM" },
+      { price: 11, quantity: "20kg", startTime: "11-01-2023 10:50AM" },
+      { price: 15, quantity: "600kg", startTime: "11-01-2023 10:40AM" },
+    ],
   },
   {
     id: 13,
@@ -161,6 +216,11 @@ export const products = [
     lotNumber: "DAN-136",
     quantity: 600,
     remainingQuantity: 300,
+    bids: [
+      { price: 16, quantity: "100kg", startTime: "11-01-2023 11:00AM" },
+      { price: 11, quantity: "20kg", startTime: "11-01-2023 10:50AM" },
+      { price: 15, quantity: "600kg", startTime: "11-01-2023 10:40AM" },
+    ],
   },
   {
     id: 14,
@@ -173,6 +233,11 @@ export const products = [
     lotNumber: "DAN-137",
     quantity: 500,
     remainingQuantity: 250,
+    bids: [
+      { price: 16, quantity: "100kg", startTime: "11-01-2023 11:00AM" },
+      { price: 11, quantity: "20kg", startTime: "11-01-2023 10:50AM" },
+      { price: 15, quantity: "600kg", startTime: "11-01-2023 10:40AM" },
+    ],
   },
   {
     id: 15,
@@ -185,6 +250,11 @@ export const products = [
     lotNumber: "DAN-138",
     quantity: 2000,
     remainingQuantity: 1500,
+    bids: [
+      { price: 16, quantity: "100kg", startTime: "11-01-2023 11:00AM" },
+      { price: 11, quantity: "20kg", startTime: "11-01-2023 10:50AM" },
+      { price: 15, quantity: "600kg", startTime: "11-01-2023 10:40AM" },
+    ],
   },
   {
     id: 16,
@@ -197,6 +267,11 @@ export const products = [
     lotNumber: "DAN-139",
     quantity: 1800,
     remainingQuantity: 1200,
+    bids: [
+      { price: 16, quantity: "100kg", startTime: "11-01-2023 11:00AM" },
+      { price: 11, quantity: "20kg", startTime: "11-01-2023 10:50AM" },
+      { price: 15, quantity: "600kg", startTime: "11-01-2023 10:40AM" },
+    ],
   },
   {
     id: 17,
@@ -209,5 +284,10 @@ export const products = [
     lotNumber: "DAN-140",
     quantity: 1500,
     remainingQuantity: 1000,
+    bids: [
+      { price: 16, quantity: "100kg", startTime: "11-01-2023 11:00AM" },
+      { price: 11, quantity: "20kg", startTime: "11-01-2023 10:50AM" },
+      { price: 15, quantity: "600kg", startTime: "11-01-2023 10:40AM" },
+    ],
   },
 ];

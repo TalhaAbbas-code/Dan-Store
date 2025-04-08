@@ -1,6 +1,6 @@
 import React from 'react'
-import Products from "./components/Products";
-import FAQ from "./components/FAQ";
+import Products from "../components/Products";
+import FAQ from "../components/FAQ";
 
 const MarketPlace = () => {
   return (

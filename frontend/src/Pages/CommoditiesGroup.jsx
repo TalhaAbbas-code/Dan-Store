@@ -1,10 +1,10 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import Modal from "./components/Modal";
-import { products as productData } from "./constants/products";
+import Modal from "../components/Modal";
+import { products as productData } from "../constants/products";
 import { FaCheck } from "react-icons/fa6";
-import Rectangle from "./assets/images/Rectangle 42.png";
-import * as images from "./assets/images";
+import Rectangle from "../assets/images/Rectangle 42.png";
+import * as images from "../assets/images";
 import { useNavigate } from "react-router-dom";
 const CommoditiesGroup = () => {
   const navigate = useNavigate();

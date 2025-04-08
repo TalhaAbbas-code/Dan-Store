@@ -14,7 +14,7 @@ export const menuItems = [
     icon: <HiOutlineShoppingCart size={18} />,
     link: "/marketplace",
   },
-  { name: "Chats", icon: <PiChatCircleTextLight size={21} />, link: "#" },
+  { name: "Chats", icon: <PiChatCircleTextLight size={21} />, link: "chat" },
   { name: "My Trades", icon: <BsBoxSeam size={17} />, link: "#" },
 ];
 export const navLinks = [

@@ -1,14 +1,12 @@
-import { useState } from "react";
-import {
-  FaBars,
-  FaTimes,
-} from "react-icons/fa";
+import { useState, useEffect } from "react";
+import { FaBars, FaTimes } from "react-icons/fa";
 import Modal from "./Modal";
 import * as images from "../assets/images";
-import RegForm from "./RegForm.jsx"
+import RegForm from "./RegForm.jsx";
 import { menuItems, navLinks } from "../constants/navLinks";
 import Danlogo from "../assets/images/DAN logo.png";
 import { RoleButton } from "./RoleButton.jsx";
+import OtpInput from "react-otp-input";
 
 const Navbar = () => {
   const [language, setLanguage] = useState("ENG");
@@ -19,6 +17,8 @@ const Navbar = () => {
   const [step, setStep] = useState(1);
   const [otp, setOtp] = useState(["", "", "", ""]);
   const [selectedRole, setSelectedRole] = useState(null);
+  const [timer, setTimer] = useState(60);
+  const [generatedOtp, setGeneratedOtp] = useState("");
 
   const handleRole = (role) => {
     setSelectedRole(role);
@@ -26,23 +26,36 @@ const Navbar = () => {
   const toggleLanguage = () => {
     setLanguage(language === "ENG" ? "عربي" : "ENG");
   };
- 
-  const handleClick = (action) => {
-   
-     setIsOpen(true); 
-    
+
+  const handleLogin = (action) => {
+    setIsOpen(true);
   };
-  const handleOtpChange = (index, value) => {
-    if (value.length > 1) return; 
+  
+  //for otp timer
+  useEffect(() => {
+    let countdown;
 
-    const newOtp = [...otp];
-    newOtp[index] = value;
-    setOtp(newOtp);
+    if (step === 2) {
+      setTimer(60);
 
-    
-    if (value && index < otp.length - 1) {
-      document.getElementById(`${index + 1}`).focus();
+      countdown = setInterval(() => {
+        setTimer((prev) => {
+          if (prev <= 1) {
+            clearInterval(countdown);
+            return 0;
+          }
+          return prev - 1;
+        });
+      }, 1000);
     }
+
+    return () => clearInterval(countdown);
+  }, [step]);
+  //formt otp timer
+  const formatTime = (seconds) => {
+    const min = String(Math.floor(seconds / 60)).padStart(2, "0");
+    const sec = String(seconds % 60).padStart(2, "0");
+    return `${min}:${sec}`;
   };
 
   return (
@@ -69,7 +82,7 @@ const Navbar = () => {
             <a
               key={index}
               href={link.href}
-              onClick={() => handleClick(link.action)}
+              onClick={() => handleLogin(link.action)}
               className="flex items-center gap-2 hover:text-gray-300"
             >
               {link.icon} {link.label}
@@ -169,12 +182,13 @@ const Navbar = () => {
           </div>
         )}
       </nav>
+      {/* Welcome entre phonenumber  */}
       {step === 1 && (
         <Modal
           isOpen={isOpen}
           onClose={() => {
             setIsOpen(false);
-            setStep(0);
+            setStep(1);
           }}
           title="WELCOME TO DAN"
           subTittle="Entre your mobile number to continue"
@@ -184,21 +198,25 @@ const Navbar = () => {
               <span className="font-bold">Terms of Use</span> at DAN
             </>
           }
-          btnClick={() => setStep(2)}
+          btnClick={() => {
+            if (phoneNumber.length === 11) {
+              const otp = Math.floor(1000 + Math.random() * 9000);
+              console.log(otp);
+              setGeneratedOtp(otp.toString());
+              setStep(2);
+            } else {
+              alert("Please enter correct 11 digit phonenumber");
+            }
+          }}
         >
           <div className="p-5 flex border-2 mt-[10%]">
             <div className="flex items-center gap-2">
-              <img
-                src="https://flagcdn.com/w40/sa.png"
-                alt="Saudi Arabia Flag"
-                className="w-6 h-4"
-              />
               <select
                 value={countryCode}
                 onChange={(e) => setCountryCode(e.target.value)}
                 className="bg-transparent outline-none text-gray-700 cursor-pointer"
               >
-                <option value="+966">+966</option>
+                <option value="+966">+92</option>
                 <option value="+1">+1</option>
                 <option value="+44">+44</option>
                 <option value="+91">+91</option>
@@ -217,48 +235,67 @@ const Navbar = () => {
           </div>
         </Modal>
       )}
+      {/* OTP verification  */}
       {step === 2 && (
         <Modal
           isOpen={isOpen}
           onClose={() => {
             setIsOpen(false);
-            setStep(0);
+            setStep(1);
           }}
-          title="ENTRE OTP"
-          subTittle={`Verify your number by entering the 4 digit code send to ${phoneNumber}`}
+          title="ENTER OTP"
+          subTittle={`Verify your number by entering the 4 digit code sent to ${phoneNumber}`}
           footerText={
             <>
               By signing in I agree to the{" "}
               <span className="font-bold">Terms of Use</span> at DAN
             </>
           }
-          btnClick={() => setStep(3)}
+          btnClick={() => {
+            const isValidTime = timer > 0;
+
+            if (otp === generatedOtp && isValidTime) {
+              setStep(3);
+            } else if (!isValidTime) {
+              alert("OTP expired. Please request a new one.");
+            } else {
+              alert("Invalid OTP. Please try again.");
+            }
+          }}
         >
-          <div className="flex justify-center gap-[10%] mt-4">
-            {otp.map((digit, index) => (
-              <input
-                key={index}
-                id={index}
-                type="text"
-                maxLength="1"
-                value={digit}
-                onChange={(e) => handleOtpChange(index, e.target.value)}
-                className="w-12 h-12 text-center border border-gray-400 rounded-md text-lg"
-              />
-            ))}
+          {/* for otp */}
+          <div className="flex justify-center mt-4">
+            <OtpInput
+              value={otp}
+              onChange={(val) => setOtp(val)}
+              numInputs={4}
+              isInputNum
+              shouldAutoFocus
+              inputStyle={{
+                width: "3rem",
+                height: "3rem",
+                fontSize: "1.5rem",
+                borderRadius: "8px",
+                border: "1px solid #ccc",
+                textAlign: "center",
+                margin: "0 0.5rem",
+              }}
+            />
           </div>
 
           <p className="text-xs text-center text-gray-600 mt-5">
-            OTP will expire in <span className="font-bold">01:00</span>
+            OTP will expire in{" "}
+            <span className="font-bold">{formatTime(timer)}</span>
           </p>
         </Modal>
       )}
+      {/* Select role  */}
       {step === 3 && (
         <Modal
           isOpen={isOpen}
           onClose={() => {
             setIsOpen(false);
-            setStep(0);
+            setStep(1);
           }}
           title="Welcome to DAN"
           subTittle="Please select one of the following"
@@ -280,17 +317,17 @@ const Navbar = () => {
           </div>
         </Modal>
       )}
+      {/* Registration Form */}
       {step === 4 && <RegForm btnClick={() => setStep(5)}></RegForm>}
+      {/* Registration Successful */}
       {step === 5 && (
         <Modal
           isOpen={isOpen}
           onClose={() => {
-           
             setIsOpen(false);
-            
           }}
           footerText="Your Account verification isi in progress.You'll recive a notification and/or E-mail once approved by Admin"
-          btnClick={() =>{
+          btnClick={() => {
             setIsOpen(false);
             setStep(1);
           }}

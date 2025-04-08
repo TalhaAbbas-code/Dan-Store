@@ -1,7 +1,7 @@
 import { useParams, useNavigate } from "react-router-dom";
 import { products as productData } from "../constants/products";
 import { useState } from "react";
-import AuctionCard from "./AuctionCard";
+import AuctionCard from "../components/AuctionCard";
 import { productData as productBuyOptions } from "../constants/productBuyOptions";
 
 const TraderDetailProduct = () => {
@@ -10,6 +10,7 @@ const TraderDetailProduct = () => {
   const [products] = useState(productData);
   const [activeTab, setActiveTab] = useState("Buy Now");
   const product = products.find((p) => String(p.id) === String(id));
+  const [disabledIndex, setDisabledIndex] = useState(null);
   const inputBoxStyle =
     "flex justify-between items-center bg-neutral-100 border p-5 rounded-md";
   const inputTextStyle = "text-black ";
@@ -35,7 +36,6 @@ const TraderDetailProduct = () => {
     { label: "Bid Start Time", value: startTime },
     { label: "Bid End Time", value: endTime },
   ];
-  
 
   return (
     <>
@@ -121,7 +121,15 @@ const TraderDetailProduct = () => {
                   <div key={index} className={inputBoxStyle}>
                     <p className={inputTextStyle}>{item.quantity}kg</p>
                     <p className={inputTextStyle}>{item.price}</p>
-                    <button className="px-12 py-2 text-white bg-primary rounded-md">
+                    <button
+                      onClick={() => setDisabledIndex(index)}
+                      disabled={disabledIndex === index}
+                      className={`px-12 py-2 rounded-md transition-colors duration-300 ${
+                        disabledIndex === index
+                          ? "bg-gray-400 cursor-not-allowed text-white"
+                          : "bg-primary text-white"
+                      }`}
+                    >
                       Buy
                     </button>
                   </div>
