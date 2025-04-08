@@ -4,7 +4,7 @@ This is a dynamic platform where users can participate as suppliers or traders t
 
 The platform utilizes Tailwind CSS for modern, responsive styling.The application is fully responsive ensuring a sleek and user-friendly interface. Axios handles efficient API calls for smooth data fetching, while React Hook Form is employed to manage and validate form data. React OTP Component is integrated to handle OTP for secure user verification. To enhance security and maintain authenticated sessions, interceptors are used to store and send authorization tokens with every request.
 
-https://github.com/TalhaAbbas-code/Dan-Store/blob/master/Screenshot%20(72).png
+
 <img src="https://github.com/TalhaAbbas-code/Dan-Store/blob/master/Screenshot%20(72).png" alt="Project Screenshot" >
 <img src="https://github.com/TalhaAbbas-code/Dan-Store/blob/master/Screenshot%20(74).png" alt="Project Screenshot" >
 <img src="https://github.com/TalhaAbbas-code/Dan-Store/blob/master/Screenshot%20(75).png" alt="Project Screenshot" >
