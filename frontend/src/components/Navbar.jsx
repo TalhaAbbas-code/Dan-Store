@@ -7,6 +7,7 @@ import { menuItems, navLinks } from "../constants/navLinks";
 import Danlogo from "../assets/images/DAN logo.png";
 import { RoleButton } from "./RoleButton.jsx";
 import OtpInput from "react-otp-input";
+import * as AuthApi from "../api/AuthRequests.js";
 
 const Navbar = () => {
   const [language, setLanguage] = useState("ENG");
@@ -19,6 +20,7 @@ const Navbar = () => {
   const [selectedRole, setSelectedRole] = useState(null);
   const [timer, setTimer] = useState(60);
   const [generatedOtp, setGeneratedOtp] = useState("");
+  const [data, setData] = useState();
 
   const handleRole = (role) => {
     setSelectedRole(role);
@@ -198,14 +200,26 @@ const Navbar = () => {
               <span className="font-bold">Terms of Use</span> at DAN
             </>
           }
-          btnClick={() => {
+          btnClick={async () => {
             if (phoneNumber.length === 11) {
-              const otp = Math.floor(1000 + Math.random() * 9000);
-              console.log(otp);
-              setGeneratedOtp(otp.toString());
-              setStep(2);
+              const payload = {
+                mobileNumber: phoneNumber,
+                deviceToken: " ",
+                isDevelopment: true,
+              };
+
+              try {
+                const response = await AuthApi.SendOtp(payload);
+                console.log(response.data);
+                if (response.data?.isSuccessful && response.data?.statusCode === 200) {
+                  setGeneratedOtp(response.data.response.response);
+                  setStep(2);
+                }
+              } catch (error) {
+                console.error("Error sending OTP:", error);
+              }
             } else {
-              alert("Please enter correct 11 digit phonenumber");
+              alert("Please enter correct 11 digit phone number");
             }
           }}
         >
@@ -251,15 +265,35 @@ const Navbar = () => {
               <span className="font-bold">Terms of Use</span> at DAN
             </>
           }
-          btnClick={() => {
+          btnClick={async() => {
             const isValidTime = timer > 0;
 
-            if (otp === generatedOtp && isValidTime) {
-              setStep(3);
-            } else if (!isValidTime) {
-              alert("OTP expired. Please request a new one.");
-            } else {
-              alert("Invalid OTP. Please try again.");
+            if ( isValidTime) {
+               const payload = {
+                 mobileNumber: phoneNumber,
+                 otp:generatedOtp,
+                 
+               };
+
+               try {
+                 const response = await AuthApi.AuthenticateMobileUser(payload);
+                 console.log(response.data);
+                 if (
+                   response.data?.isSuccessful &&
+                   response.data?.statusCode === 200
+                 ) {
+                   const token = response.data.response.access;
+                   localStorage.setItem("authToken", token);
+                 
+                   setStep(3);
+                 }
+               } catch (error) {
+                 console.error( error);
+               }
+
+              
+            }  else {
+               alert("OTP expired. Please request a new one.");
             }
           }}
         >
