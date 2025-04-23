@@ -6,21 +6,61 @@ import { FaCheck } from "react-icons/fa6";
 import Rectangle from "../assets/images/Rectangle 42.png";
 import * as images from "../assets/images";
 import { useNavigate } from "react-router-dom";
+import * as CommoditiesApi from "../api/CommoditiesRequests";
 const CommoditiesGroup = () => {
   const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(true);
   const [step, setStep] = useState(1);
   const [products] = useState(productData);
   const [quantity, setQuantity] = useState("");
-  const [unit, setUnit] = useState("KG");
-  const categories = [...new Set(products.map((product) => product.category))];
+  const [unit, setUnit] = useState();
+  //const categories = [...new Set(products.map((product) => product.category))];
+  const [categories,setcategories]=useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
   const [selectedProduct, setSelectedProduct] = useState("");
   const [filteredProducts, setFilteredProducts] = useState(products);
+   const [selectedUnit, setSelectedUnit] = useState("");
+
 
   const handleCategorySelect = (category) => {
     setSelectedCategory(category);
   };
+  const handleUnit = (e) => {
+    setSelectedUnit(e.target.value);
+    
+  };
+  useEffect(() => {
+    // Function to call API
+    const fetchData = async () => {
+      try {
+         const response = await CommoditiesApi.GetCommodities();
+         console.log(response)
+       if(response){
+        const data = response.data.response;
+        console.log("set data",data);
+        setcategories(data)
+       }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+    const fetchUnits = async () => {
+      try {
+        const response = await CommoditiesApi.GetUnits();
+        
+        if (response) {
+          const data = response.data.response;
+          
+         setUnit(data)
+        }
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+    fetchUnits(); 
+  }, []);
   useEffect(() => {
     if (selectedCategory) {
       setFilteredProducts(
@@ -49,10 +89,30 @@ const CommoditiesGroup = () => {
           onClose={() => setIsOpen(false)}
           title="Commodities Group"
           subTittle="Select Commodities Group of your interest"
-          btnClick={() => setStep(2)}
+          btnClick={async () => {
+            if (selectedCategory) {
+              const payload = {
+                commodityIds: [selectedCategory.id],
+              };
+              try {
+                const response = await CommoditiesApi.SetCommodities(payload);
+
+                if (response) {
+                  const data = response.data.response;
+
+                  setFilteredProducts(data);
+                  setStep(2);
+                }
+              } catch (error) {
+                console.error("Error fetching data:", error);
+              }
+            } else {
+              console.log("category not selected");
+            }
+          }}
         >
-          <div className="flex max-sm:flex-col gap-4 mt-10">
-            {categories.map((category, index) => (
+          <div className="flex flex-wrap max-sm:flex-col gap-4 mt-10">
+            {categories?.map((category, index) => (
               <div
                 key={index}
                 className={`relative cursor-pointer   rounded-md border-2 flex flex-col  items-center justify-center w-56 h-48 overflow-hidden transition-all
@@ -61,16 +121,16 @@ const CommoditiesGroup = () => {
               >
                 <img
                   src={Rectangle}
-                  alt={category}
+                  alt={category.name}
                   className="w-full h-full  object-cover"
                 />
 
                 <span className="absolute  bottom-0 text-white text-2xl left-3  font-semibold">
-                  {category}
+                  {category.name}
                 </span>
 
                 {/* Tick Icon */}
-                {selectedCategory === category && (
+                {selectedCategory.id === category.id && (
                   <FaCheck className="absolute top-[40%] left-[40%] text-white font-bold text-5xl " />
                 )}
               </div>
@@ -82,7 +142,7 @@ const CommoditiesGroup = () => {
         <Modal
           isOpen={isOpen}
           onClose={() => setIsOpen(false)}
-          title={selectedCategory}
+          title={selectedCategory.name}
           btnClick={() => setStep(3)}
         >
           <div className="flex flex-wrap max-sm:flex-col gap-4 mt-10">
@@ -94,13 +154,13 @@ const CommoditiesGroup = () => {
                 onClick={() => handleProductSelect(product)}
               >
                 <img
-                  src={product.image}
-                  alt={product.title}
+                  src={Rectangle}
+                  alt={product.name}
                   className="w-full h-[70%] rounded-xl  object-cover"
                 />
 
                 <span className="   text-black text-md left-3  ">
-                  {product.title}
+                  {product.name}
                 </span>
 
                 {/* Tick Icon */}
@@ -116,21 +176,43 @@ const CommoditiesGroup = () => {
         <Modal
           isOpen={isOpen}
           onClose={() => setIsOpen(false)}
-          title="Create Trade"
+          title="Create Trade" 
           subTittle="Please fill out the following"
-          btnClick={() => setStep(4)}
+          btnClick={async() =>{
+            
+             try {
+               const payload = {
+                 unitId: selectedUnit,
+                 subCommodityId: selectedProduct.id,
+                 quantity: quantity,
+               };
+              console.log(payload);
+               const response = await CommoditiesApi.CreateTrade(payload);
+
+               if (response) {
+                 const data = response.data.response;
+                 console.log(data)
+                 setStep(4);
+
+                
+               }
+             } catch (error) {
+               console.error("Error fetching data:", error);
+             }
+            
+            }}
         >
           <div className="w-96">
             <div className="w-full  flex flex-col bg-white   shadow-lg">
               <img
-                src={selectedProduct.image}
-                alt={selectedProduct.title}
+                src={Rectangle}
+                alt={selectedProduct.name}
                 className="w-full h-40 object-cover rounded-md mb-4"
               />
 
               <p className="font-semibold mb-2">
                 <span className="text-gray-700">Sub-Commodity Name:</span>{" "}
-                {selectedProduct.title}
+                {selectedProduct.name}
               </p>
 
               <label className="block text-gray-700 mb-1">Quantity</label>
@@ -143,14 +225,13 @@ const CommoditiesGroup = () => {
               />
 
               <label className="block text-gray-700 mb-1">Unit</label>
-              <select
-                value={unit}
-                onChange={(e) => setUnit(e.target.value)}
-                className="w-full border p-2 rounded-md mb-4"
-              >
-                <option value="KG">KG</option>
-                <option value="Ton">Ton</option>
-                <option value="Gram">Gram</option>
+              <select value={selectedUnit} onChange={handleUnit}>
+                <option value="">Select Unit</option>
+                {unit.map((unit) => (
+                  <option key={unit.id} value={unit.name}>
+                    {unit.name}
+                  </option>
+                ))}
               </select>
             </div>
           </div>

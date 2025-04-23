@@ -12,4 +12,8 @@ API.interceptors.request.use((req) => {
   return req;
 });
 
-export const GetCommodities = (data) => API.post("/Commodity/GetCommodities", data);
+export const GetCommodities = () => API.get("/Commodity/GetCommodities");
+export const SetCommodities = (data) => API.post("/Commodity/GetSubCommodities",data);
+export const GetUnits = () => API.get("/Trade/GetUnits");
+export const CreateTrade = (payload) => API.post("/Trade/CreateTrade",payload);
+
